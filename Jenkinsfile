@@ -15,26 +15,14 @@ pipeline {
               }
             }
           }
-#            stage("veracodescan"){
-#        steps{
-#            veracode applicationName:'Eliza', 
-#            canFailJob: true,
-#            createSandbox: true, 
-#            criticality: 'VeryHigh', 
-#           debug: true,
-#           fileNamePattern: '',
-#           replacementPattern: '', 
-##           scanExcludesPattern: '', 
-#           scanIncludesPattern: '', 
-#            scanName: '$buildnumber', 
-#            teams: '', 
-#            timeout: 60, 
-#            uploadExcludesPattern: '', 
-#            uploadIncludesPattern: '**/**.jar',
-#           vid: 'ff9dc6d3ddf16b9df17aed9814dca85a',
-# ##           vkey: '2150d0dbaca348dbc7acf6884287c93aa6d7916afd3f5b9d2bd7679765c40438d472523816100fe767fb60399767b0403cada929908572dd89532b4d48a45e96', 
-#            waitForScan: true
-#        }
-#    }
+           stage("Quality Gate") {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }     
     }
     }
