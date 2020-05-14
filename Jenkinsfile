@@ -8,10 +8,4 @@ node('Linux')
     git 'https://github.com/ashokreddy7777/mvn-repo.git'
     sh 'mvn -B -X clean install'
   }
-  stage "Jira"
-  post {
-    always {
-      jiraSendBuildInfo branch: '', site: 'avrb.atlassian.net'
-    }
-  }
 }
