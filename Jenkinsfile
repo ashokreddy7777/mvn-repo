@@ -17,7 +17,10 @@ pipeline{
     }
     stage('Tomcat Deploy'){
       steps{
-        deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://34.201.67.144:8080/')], contextPath: 'FRIENDS91', war: '**/*.war'
+        sh '''
+           cp /home/ak/jenkins_home/workspace/a-automation/mvn-repo/FRIENDS9.war /opt/tomcat/webapps/FRIENDS9.war
+           /opt/tomcat/bin/startup.sh
+        '''    
       }
     }
     stage('ws cleanup'){
