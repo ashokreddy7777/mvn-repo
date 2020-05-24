@@ -8,11 +8,13 @@ pipeline{
   stages{
     stage('Build'){
       steps{
+        withSonarQubeEnv ('sonarqube'){
         sh '''
             echo "PATH = ${PATH}"
             echo "M2_HOME = ${M2_HOME}"
-            mvn -X clean install
+            mvn -X clean package sonar:sonar
         '''     
+        } 
       }
     }
     stage('Tomcat Deploy'){
